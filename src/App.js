@@ -2,6 +2,7 @@ import Header from "./Header";
 import Content from "./Content";
 import Footer from "./Footer";
 import AddItem from "./AddItem";
+import SearchItem from "./SearchItem";
 import { useState } from "react";
 
 function App() {
@@ -10,6 +11,8 @@ function App() {
   );
 
   const [newItem, setNewItem] = useState("");
+
+  const [search, setSearch] = useState("");
 
   const setAndSaveItem = (newItems) => {
     setItems(newItems);
@@ -43,13 +46,17 @@ function App() {
   return (
     <div className="App">
       <Header title="Grocery List"></Header>
+
       <AddItem
         newItem={newItem}
         setNewItem={setNewItem}
         handleSubmit={handleSubmit}
       ></AddItem>
+      <SearchItem search={search} setSearch={setSearch}></SearchItem>
       <Content
-        items={items}
+        items={items.filter((item) =>
+          item.item.toLowerCase().includes(search.toLowerCase())
+        )}
         handleCheck={handleCheck}
         handleDelete={handleDelete}
       ></Content>
